@@ -73,11 +73,12 @@ th
       <th  style="padding: 10px">rollNumber</th>
       <th>name</th>
       </tr>
-      
+      <c:forEach items="${list }" var="list">
       <tr>
        <td>${st.rollnumber}</td>
       <td>${st.name}</td>
       <tr>
+      </c:forEach>                                        
       </table>
       
       <table>
