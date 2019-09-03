@@ -7,10 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
-import com.origin.learn.spring.sdms.student.Student;
-import com.origin.learn.spring.sdms.student.StudentMarks;
-
+import org.springframework.stereotype.Component;
+@Component
 public class StudentDaoImpl {
 
 	@Autowired
@@ -23,16 +21,42 @@ public class StudentDaoImpl {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
+	public List<StudentAllDetails> getDetailsList(int rollnumber)
+ {
+		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
+				new RowMapper<StudentAllDetails>() {
 
-	public List<Student> getStudentList(int rollnumber) {
-		return jdbcTemplate.query("Select * from Students where rollnumber = ?", new Object[] { rollnumber },
+					public StudentAllDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+						StudentAllDetails alldetail = new StudentAllDetails();
+						alldetail.setRollNumber(rs.getInt(1));
+						alldetail.setName(rs.getString(2));
+						alldetail.setSubject(rs.getString(3));
+						alldetail.setObtainedMarks(rs.getInt(4));
+						alldetail.setMaxMarks(rs.getInt(5));
+						int  obtainMarks = rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getInt(5);
+						alldetail.setObtainedMarks(obtainMarks);
+						float percentage = (((alldetail.getObtainedMarks()) * 100) / (alldetail.getMaxMarks()));
+						
+						System.out.println(percentage);
+					
+						alldetail.setPercentage((int) percentage);
+						return alldetail;
+					}
+
+				});
+	}
+	
+
+/*public List<Student> getStudentList(int rollnumber) {
+		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<Student>() {
 
 					public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Student student = new Student();
 						student.setRollnumber(rs.getInt(1));
 						student.setName(rs.getString(2));
-						student.setFather_Name(rs.getString(3));
+						student.setFatherName(rs.getString(3));
 						student.setAddress(rs.getString(4));
 
 						return student;
@@ -42,7 +66,7 @@ public class StudentDaoImpl {
 	}
 
 	public List<StudentMarks> getStudentMarks(int rollnumber) {
-		return jdbcTemplate.query("Select * from StudentMarks where StuRollNo = ?", new Object[] { rollnumber },
+		return jdbcTemplate.query("SELECT * FROM studentmarks WHERE RollNumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentMarks>() {
 
 					@Override
@@ -54,18 +78,16 @@ public class StudentDaoImpl {
 						marks.setHindi(rs.getInt(4));
 						marks.setScience(rs.getInt(5));
 						marks.setMaxmarks(rs.getInt(6));
-						float obtainMarks = rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getInt(5) + rs.getInt(6);
+						int  obtainMarks = rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getInt(5);
 						marks.setObtainedmarks(obtainMarks);
 						float percentage = (((marks.getObtainedmarks()) * 100) / (marks.getMaxmarks()));
-						Float per = percentage;
-						String s = per.toString();
-						String s1 = s.substring(0, 5);
-						Float pers = Float.parseFloat(s1);
-						float percentage1 = pers.floatValue();
-						marks.setPercentage(percentage1);
+						
+						System.out.println(percentage);
+					
+						marks.setPercentage(percentage);
 						return marks;
 					}
 			});
-	}
+	}*/
 
 }

@@ -1,10 +1,10 @@
-package com.origin.learn.spring.sdms.student;
+package com.origin.learn.spring.sdms.Dao;
 
 public class Student {
 
 	private int rollnumber;
 	private String name;
-	private String Father_Name;
+	private String fatherName;
 	private String address;
 	
 	public int getRollnumber() {
@@ -19,11 +19,11 @@ public class Student {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getFather_Name() {
-		return Father_Name;
+	public String getFatherName() {
+		return fatherName;
 	}
-	public void setFather_Name(String father_Name) {
-		Father_Name = father_Name;
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
 	}
 	public String getAddress() {
 		return address;
@@ -33,7 +33,7 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return "Student [rollnumber=" + rollnumber + ", name=" + name + ", Father_Name=" + Father_Name + ", address=" + address + "]";
+		return "Student [rollnumber=" + rollnumber + ", name=" + name + ", fatherName=" + fatherName + ", address=" + address + "]";
 	}
 	
 	

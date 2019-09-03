@@ -14,11 +14,11 @@ div{
      overflow: auto;
 }
 h1{
-   color: blue;
+   color: 	#FFA500;
 }
 th
 {
- background-color: silver;
+ background-color: 	#778899;
 }
 </style>
 </head>
@@ -26,20 +26,18 @@ th
  
 <h1><i>Student Details</i></h1>
    <table border=1>
-      <tr>
-      <th style="padding: 10px">Roll_Number</th>
-      <th>StuName</th>
-      <th>Subject</th>
-      <th>MaxMarks</th>
-      <th>ObtainedMarks</th>
+     <tr>
+      <th  style="padding: 10px">Rollnumber</th>
+      <th>Name</th>
+      <th>fatherName</th>
+      <th>Address</th>
       </tr>
        
       <tr>
-      <td style="padding: 10px">${sd.rollno}</td>
+      <td>${sd.rollnumber}</td>
       <td>${sd.name}</td>
-      <td>${sd.subject}</td>
-      <td>${sd.maxmarks}</td>
-      <td>${sd.obtmarks}</td>
+      <td>${sd.fatherName}</td>
+      <td>${sd.address}</td>
       </tr>
       </table>
       
@@ -47,7 +45,7 @@ th
       <h1><i>Students Marks</i></h1>
       <table border=1>
       <tr>
-      <th style="padding: 10px">RollNo</th>
+      <th  style="padding: 10px">RollNumber</th>
       <th>Math</th>
       <th>English</th>
       <th>hindi</th>
@@ -58,7 +56,7 @@ th
       </tr>
        
       <tr>
-      <td style="padding: 10px">${sm.rollno}</td>
+      <td>${sm.rollnumber}</td>
       <td>${sm.maths}</td>
       <td>${sm.english}</td>
       <td>${sm.hindi}</td>
@@ -69,5 +67,6 @@ th
       </tr>
       </table>
       </div>
+      
 </body>
 </html>

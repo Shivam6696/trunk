@@ -1,4 +1,4 @@
-package com.origin.learn.spring.sdms.student;
+package com.origin.learn.spring.sdms.Dao;
 
 public class StudentMarks {
 	private int rollnumber;

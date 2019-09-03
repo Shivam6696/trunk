@@ -7,10 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/login" method="post">
-        name: <input type="text" name="name" />
-        password : <input type="text" name="name">
-          <input type="submit" />
-        </form>
+<form action="http://localhost:6696/logs/alldetails" method="post">
+    Roll Number: <input type="number" name="rollnumber">
+    <input type="submit">
+    </form>
 </body>
 </html>
