@@ -2,15 +2,16 @@ package com.origin.learn.spring.sdms.student;
 
 public class Student {
 
-	private int id;
+	private int rollnumber;
 	private String name;
 	private String Father_Name;
 	private String address;
-	public int getId() {
-		return id;
+	
+	public int getRollnumber() {
+		return rollnumber;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setRollnumber(int rollnumber) {
+		this.rollnumber = rollnumber;
 	}
 	public String getName() {
 		return name;
@@ -32,7 +33,7 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", Father_Name=" + Father_Name + ", address=" + address + "]";
+		return "Student [rollnumber=" + rollnumber + ", name=" + name + ", Father_Name=" + Father_Name + ", address=" + address + "]";
 	}
 	
 	
