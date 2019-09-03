@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="http://localhost:6696/logs/alldetails" method="post">
+<form action="http://localhost:6696/logs/details" method="post">
     Roll Number: <input type="number" name="rollnumber">
     <input type="submit">
     </form>

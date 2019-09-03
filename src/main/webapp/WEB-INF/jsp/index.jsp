@@ -23,7 +23,7 @@ th
 </style>
 </head>
 <body>
- 
+ <%-- 
 <h1><i>Student Details</i></h1>
    <table border=1>
      <tr>
@@ -66,7 +66,39 @@ th
       <td>${sm.percentage}</td>
       </tr>
       </table>
-      </div>
+      </div>--%>
+      <h1><i>Student Details</i></h1>
+   <table border=1>
+     <tr>
+      <th  style="padding: 10px">rollNumber</th>
+      <th>name</th>
+      </tr>
+      
+      <tr>
+       <td>${st.rollnumber}</td>
+      <td>${st.name}</td>
+      <tr>
+      </table>
+      
+      <table>
+      <tr>
+      <th>subject</th>
+      <th>obtainedMarks</th>
+      <th>maxMarks</th>
+      </tr>
+      
+      <tr>
+      <td>${st.subject}</td>
+      <td>${st.obtainedMarks}</td>
+      <td>${st.maxMarks}</td>
+       </tr>
+       </table>
+       
+       <table>
+       <tr>
+       <th>percentage</th>
+       </tr>
+       </table>
       
 </body>
 </html>

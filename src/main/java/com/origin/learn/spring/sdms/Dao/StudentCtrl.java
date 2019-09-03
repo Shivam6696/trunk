@@ -38,11 +38,11 @@ public class StudentCtrl {
 	 * studentMarks); return modelAndView;
 	 */
 
-	@RequestMapping(value = "alldetails", method = RequestMethod.POST)
+	@RequestMapping(value = "details", method = RequestMethod.POST)
 	public ModelAndView studentDetailsPage(@RequestParam int rollnumber) {
 		List<StudentAllDetails> list = studentdetails.getDetailsList(rollnumber);
 	
-		StudentAllDetails allDetails = list.get(1);
+		StudentAllDetails allDetails = list.get(0);
 		System.out.println(allDetails);
 		System.out.print(allDetails.getName());
 		System.out.print(allDetails.getSubject());

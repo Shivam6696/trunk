@@ -28,27 +28,24 @@ public class StudentDaoImpl {
 				new RowMapper<StudentAllDetails>() {
 
 					public StudentAllDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-						StudentAllDetails alldetail = new StudentAllDetails();
-						alldetail.setRollNumber(rs.getInt(1));
-						alldetail.setName(rs.getString(2));
-						alldetail.setSubject(rs.getString(3));
-						alldetail.setObtainedMarks(rs.getInt(4));
-						alldetail.setMaxMarks(rs.getInt(5));
-						int  obtainMarks = rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getInt(5);
-						alldetail.setObtainedMarks(obtainMarks);
-						float percentage = (((alldetail.getObtainedMarks()) * 100) / (alldetail.getMaxMarks()));
+						StudentAllDetails student = new StudentAllDetails();
+						student.setRollNumber(rs.getInt(1));
+						student.setName(rs.getString(2));
+						student.setSubject(rs.getString(3));
+						student.setObtainedMarks(rs.getInt(4));
+						student.setMaxMarks(rs.getInt(5));
+						student.setPercentage(rs.getInt(6));
 						
-						System.out.println(percentage);
-					
-						alldetail.setPercentage((int) percentage);
-						return alldetail;
+						return student;
 					}
 
 				});
 	}
-	
 
-/*public List<Student> getStudentList(int rollnumber) {
+	
+	
+/*
+public List<Student> getStudentList(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<Student>() {
 
@@ -88,6 +85,6 @@ public class StudentDaoImpl {
 						return marks;
 					}
 			});
-	}*/
-
+	}
+*/
 }
