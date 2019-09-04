@@ -14,46 +14,82 @@ public class StudentCtrl {
 
 	@Autowired
 	StudentDaoImpl studentdetails;
-
+	
+	 /*--------------------controller mapping for login page------------------------------ */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginpage() {
 		return "login";
 	}
-
-	/*
-	 * @RequestMapping(value = "details", method = RequestMethod.POST) public
-	 * ModelAndView studentDetailsPage(@RequestParam int rollnumber) { 
-	 * List<Student>
-	 * list = studentdetails.getStudentList(rollnumber); List<StudentMarks> list1 =
-	 * studentdetails.getStudentMarks(rollnumber);
-	 * 
-	 * Student studentDetails = list.get(0);
-	 * System.out.println(studentDetails.getName()); StudentMarks studentMarks =
-	 * list1.get(0); System.out.println(studentMarks);
-	 * System.out.println(studentMarks.getMaxmarks());
-	 * System.out.println(studentMarks.getObtainedmarks());
-	 * System.out.println(studentMarks.getPercentage()); ModelAndView modelAndView =
-	 * new ModelAndView(); modelAndView.setViewName("index");
-	 * modelAndView.addObject("sd", studentDetails); modelAndView.addObject("sm",
-	 * studentMarks); return modelAndView;
-	 */
-
+	
+	
+      /*--------------------student data mapping------------------------------ */
+	@RequestMapping(value = "studentdata",method =RequestMethod.POST)
+	public ModelAndView studentdatapage(@RequestParam int rollnumber) {
+		List<StudentData> list2 =studentdetails.getStudentDataInfo(rollnumber);
+		StudentData studentdata = list2.get(0);
+		System.out.println(studentdata.getName());
+		System.out.println(studentdata.getFatherName());
+		System.out.println(studentdata.getAddress());
+		System.out.println(studentdata.getMaths());
+		System.out.println(studentdata.getHindi());
+		System.out.println(studentdata.getEnglish());
+		System.out.println(studentdata.getMaxmarks());
+		System.out.println(studentdata.getPercentage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("index");
+		modelAndView.addObject("ss", studentdata);
+	
+		return modelAndView;
+						
+	}
+	
+	
+	 /*--------------------one student details by rollnumber mapping------------------------------ */
 	@RequestMapping(value = "details", method = RequestMethod.POST)
 	public ModelAndView studentDetailsPage(@RequestParam int rollnumber) {
-		List<StudentAllDetails> list = studentdetails.getDetailsList(rollnumber);
-	
-		StudentAllDetails allDetails = list.get(0);
-		System.out.println(allDetails);
-		System.out.print(allDetails.getName());
-		System.out.print(allDetails.getSubject());
-		System.out.print(allDetails.getObtainedMarks());
-		System.out.print(allDetails.getMaxMarks());
-		System.out.println(allDetails.getPercentage());
-		
+		List<Student> list = studentdetails.getStudentList(rollnumber);
+		List<StudentMarks> list1 = studentdetails.getStudentMarks(rollnumber);
+
+		Student studentDetails = list.get(0);
+		System.out.println(studentDetails.getName());
+		StudentMarks studentMarks = list1.get(0);
+		System.out.println(studentMarks);
+		System.out.println(studentMarks.getMaxmarks());
+		System.out.println(studentMarks.getObtainedmarks());
+		System.out.println(studentMarks.getPercentage());
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("allDetails");
-		modelAndView.addObject("st", allDetails);
-				return modelAndView;
+		modelAndView.setViewName("index");
+		modelAndView.addObject("sd", studentDetails);
+		modelAndView.addObject("sm", studentMarks);
+		return modelAndView;
 
 	}
+	
+	
+	 /*--------------------add new subject page mapping------------------------------ */
+	@RequestMapping(value = "addsubject", method = RequestMethod.GET)
+	public String subjectForm() {
+		return "addSubject";
+
+	}
+	
+	
+	 /*--------------------add new subject in table mapping------------------------------ */
+	@RequestMapping(value = "newsubject", method = RequestMethod.POST)
+	public String addNewSubject(@RequestParam String subjectName) {
+
+		StudentMarks sm = new StudentMarks(subjectName);
+		@SuppressWarnings("unused")
+		Boolean lakede = studentdetails.addSubject1(sm);
+		return subjectName;
+
+	}
+	
+	/*--------------------add new subject page mapping------------------------------ */
+	@RequestMapping(value = "jaja", method = RequestMethod.GET)
+	public String infoPage() {
+		return "infopage";
+
+	}
+	
 }

@@ -11,5 +11,8 @@
     Roll Number: <input type="number" name="rollnumber">
     <input type="submit">
     </form>
+    <tr>
+    <th>
+ Welcome !! <a href="http://localhost:6696/logs/addsubject">Click here</a> to add a new subject .
 </body>
 </html>
