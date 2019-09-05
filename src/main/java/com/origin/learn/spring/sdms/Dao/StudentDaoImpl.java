@@ -45,28 +45,23 @@ public class StudentDaoImpl {
 
 	/*---------------------------student data info in diff - diff- table method--------------------------------*/
 	public List<StudentData> getStudentDataInfo(int rollnumber) {
-		return jdbcTemplate.query("SELECT * FROM studentresultinfo WHERE RollNumber = ?", new Object[] { rollnumber },
+		return jdbcTemplate.query("SELECT * FROM newstudent WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentData>() {
 
 					@Override
 					public StudentData mapRow(ResultSet rs, int rowNum) throws SQLException {
 						StudentData result = new StudentData();
-						result.setRollnumber(rs.getInt(1));
-						result.setName(rs.getString(2));
-						result.setFatherName(rs.getString(3));
-						result.setAddress(rs.getString(4));
-
-						result.setMaths(rs.getInt(5));
-						result.setEnglish(rs.getInt(6));
-						result.setHindi(rs.getInt(7));
+						result.setRollnumber(rs.getInt(2));
+						result.setName(rs.getString(3));
+						result.setFatherName(rs.getString(4));
+						result.setAddress(rs.getString(5));
+						result.setSubject(rs.getString(6));
+						result.setObtainedmarks(rs.getInt(7));
 						result.setMaxmarks(rs.getInt(8));
-						int obtainMarks = rs.getInt(5) + rs.getInt(6) + rs.getInt(7);
+						/*int obtainMarks = rs.getInt(5) + rs.getInt(6) + rs.getInt(7);
 						result.setObtainedmarks(obtainMarks);
 						float percentage = (((result.getObtainedmarks()) * 100) / (result.getMaxmarks()));
-
-						System.out.println(percentage);
-
-						result.setPercentage(percentage);
+*/   					result.setPercentage(rs.getInt(9));
 						return result;
 					}
 				});
@@ -126,6 +121,25 @@ public class StudentDaoImpl {
 							throws SQLException, DataAccessException {
 						ps.setString(1, sub.getSubject());
 						return ps.execute();
+					}
+
+				});
+	}
+	/*-------------------------------------------------------------------------------------------------------*/
+	public List<StudentData> getStudentResult(int rollnumber) {
+		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
+				new RowMapper<StudentData>() {
+
+					public StudentData mapRow(ResultSet rs, int rowNum) throws SQLException {
+						StudentData st = new StudentData();
+						st.setRollnumber(rs.getInt(1));
+						st.setName(rs.getString(2));
+						st.setFatherName(rs.getString(3));
+						st.setAddress(rs.getString(4));
+						st.setSubject(rs.getString(5));
+						st.setMaxmarks(rs.getInt(6));
+						st.setPercentage(rs.getInt(7));
+						return st;
 					}
 
 				});

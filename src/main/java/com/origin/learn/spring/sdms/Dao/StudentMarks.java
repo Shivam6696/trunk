@@ -14,12 +14,13 @@ public class StudentMarks {
 	
 	
 	
+		
 	
+
 	public StudentMarks(String subject) {
 		super();
 		this.subject = subject;
 	}
-	
 	public int getRollnumber() {
 		return rollnumber;
 	}

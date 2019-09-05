@@ -14,37 +14,16 @@ public class StudentCtrl {
 
 	@Autowired
 	StudentDaoImpl studentdetails;
-	
-	 /*--------------------controller mapping for login page------------------------------ */
+
+	/*--------------------controller mapping for login page------------------------------ */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginpage() {
 		return "login";
 	}
+
 	
-	
-      /*--------------------student data mapping------------------------------ */
-	@RequestMapping(value = "studentdata",method =RequestMethod.POST)
-	public ModelAndView studentdatapage(@RequestParam int rollnumber) {
-		List<StudentData> list2 =studentdetails.getStudentDataInfo(rollnumber);
-		StudentData studentdata = list2.get(0);
-		System.out.println(studentdata.getName());
-		System.out.println(studentdata.getFatherName());
-		System.out.println(studentdata.getAddress());
-		System.out.println(studentdata.getMaths());
-		System.out.println(studentdata.getHindi());
-		System.out.println(studentdata.getEnglish());
-		System.out.println(studentdata.getMaxmarks());
-		System.out.println(studentdata.getPercentage());
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("index");
-		modelAndView.addObject("ss", studentdata);
-	
-		return modelAndView;
-						
-	}
-	
-	
-	 /*--------------------one student details by rollnumber mapping------------------------------ */
+
+	/*--------------------one student details by rollnumber mapping------------------------------ */
 	@RequestMapping(value = "details", method = RequestMethod.POST)
 	public ModelAndView studentDetailsPage(@RequestParam int rollnumber) {
 		List<Student> list = studentdetails.getStudentList(rollnumber);
@@ -64,17 +43,15 @@ public class StudentCtrl {
 		return modelAndView;
 
 	}
-	
-	
-	 /*--------------------add new subject page mapping------------------------------ */
+
+	/*--------------------add new subject page mapping------------------------------ */
 	@RequestMapping(value = "addsubject", method = RequestMethod.GET)
 	public String subjectForm() {
 		return "addSubject";
 
 	}
-	
-	
-	 /*--------------------add new subject in table mapping------------------------------ */
+
+	/*--------------------add new subject in table mapping------------------------------ */
 	@RequestMapping(value = "newsubject", method = RequestMethod.POST)
 	public String addNewSubject(@RequestParam String subjectName) {
 
@@ -84,12 +61,50 @@ public class StudentCtrl {
 		return subjectName;
 
 	}
-	
+
 	/*--------------------add new subject page mapping------------------------------ */
-	@RequestMapping(value = "jaja", method = RequestMethod.GET)
+	@RequestMapping(value = "enter", method = RequestMethod.GET)
 	public String infoPage() {
-		return "infopage";
+	
+		return "rollPage";
+
+	}
+	/*--------------------student data mapping------------------------------ */
+	@RequestMapping(value = "studentdata", method = RequestMethod.POST)
+	public ModelAndView studentdatapage(@RequestParam int rollnumber) {
+		List<StudentData> list2 = studentdetails.getStudentDataInfo(rollnumber);
+		StudentData studentdata = list2.get(0);
+		System.out.println(studentdata.getRollnumber());
+		System.out.println(studentdata.getName());
+		System.out.println(studentdata.getFatherName());
+		System.out.println(studentdata.getAddress());
+		System.out.println(studentdata.getSubject());
+		System.out.println(studentdata.getMaxmarks());
+		System.out.println(studentdata.getPercentage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("finalResult");
+		modelAndView.addObject("ss", studentdata);
+
+		return modelAndView;
 
 	}
 	
+	/*--------------------------------------------------------------------------------------------
+	@RequestMapping(value = "details", method = RequestMethod.POST)
+	public ModelAndView getStudentResult(@RequestParam int rollnumber) {
+		List<StudentData> list2 = studentdetails.getStudentDataInfo(rollnumber);
+		StudentData  sresult = list2.get(0);
+		System.out.println(sresult.getName());
+		System.out.println(sresult.getFatherName());
+		System.out.println(sresult.getAddress());
+		System.out.println(sresult.getSubject());
+		System.out.println(sresult.getMaxmarks());
+		System.out.println(sresult.getPercentage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("index");
+		modelAndView.addObject("ss", sresult);
+
+		return modelAndView;
+
+}*/
 }

@@ -15,7 +15,7 @@ div {
 }
 
 h1 {
-	color: #FFA500;
+	color: black;
 }
 
 th {
@@ -72,89 +72,11 @@ th {
 			</tr>
 		</table>
 	</div>
+<tr>
+<th>
+	<a href="http://localhost:6696/logs/enter">Click here</a> student result by rollnumber.
+</th>
+</tr>
 
-	<h1>
-
-
-		<a href="http://localhost:6696/logs/jaja">Click here</a> student data by rollnumber.
-
-
-		<h1>
-			<i>Student RollNumber</i>
-		</h1>
-		<table border=1>
-			<tr>
-				<th style="padding: 10px">Rollnumber</th>
-			</tr>
-			<tr>
-				<td>${sd.rollnumber}</td>
-			</tr>
-		</table>
-
-		<div>
-			<h1>
-				<i>Students Details</i>
-			</h1>
-			<table border=1>
-				<tr>
-					<th style="padding: 10px">Name</th>
-					<th>fatherName</th>
-					<th>Address</th>
-				</tr>
-
-
-				<tr>
-					<td>${sd.name}</td>
-					<td>${sd.fatherName}</td>
-					<td>${sd.address}</td>
-				</tr>
-			</table>
-		</div>
-
-
-		<div>
-			<h1>
-				<i>Students Subject</i>
-			</h1>
-			<table border=1>
-				<tr>
-
-					<th style="padding: 10px">Math</th>
-					<th>English</th>
-					<th>hindi</th>
-
-				</tr>
-
-				<tr>
-
-					<td>${sm.maths}</td>
-					<td>${sm.english}</td>
-					<td>${sm.hindi}</td>
-
-
-				</tr>
-			</table>
-		</div>
-
-		<div>
-			<h1>
-				<i>Student Result</i>
-			</h1>
-			<table border=1>
-				<tr>
-					<th>MaxsMarks</th>
-					<th>ObtainedMarks</th>
-					<th>Percentage</th>
-				</tr>
-
-
-				<tr>
-					<td>${sm.maxmarks}</td>
-					<td>${sm.obtainedmarks}</td>
-					<th>${sm.percentage}</th>
-			</table>
-
-
-		</div>
 </body>
 </html>
