@@ -10,15 +10,27 @@
 	<h1>
 		<i>Add New Subject</i>
 	</h1>
-	<form action="http://localhost:6696/logs/newsubject" method="post"> 
+	<form action="http://localhost:6696/logs/thankyou" method="post"> 
+	<tr>
+	<th>
 	Roll Number:<input type="text" name="studentrollnumber">
+	</th>
+	<th>
 	Name       :<input type="text" name="studentname">
+	</th>
+	<th>
 	Add Subject: <input type="text" name="subjectName">
+	</th>
+	<th>
    ObtaindMarks: <input type ="number" name="obtaindmarks">
+   </th>
+   <th>
    Maxmarks    :<input type = "number" name="maxmarks">
-   percentage  :<input type = "number" name= "percentage">
+   </th>
+   <th>
+  
 		<input type="submit"> </form>
-
-
+</th>
+</tr>
 </body>
 </html>

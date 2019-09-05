@@ -4,23 +4,64 @@ public class StudentMarks {
 	private int rollnumber;
 	private int maths;
 	private int english;
-	private int hindi;
 	private int science;
 	private String subject;
 	private int subjectmax;
 	private int maxmarks;
 	private float obtainedmarks;
 	private float percentage;
+	private String  name;
 	
 	
 	
-		
 	
-
-	public StudentMarks(String subject) {
+	public StudentMarks(int rollnumber, String subject) {
 		super();
+		this.rollnumber = rollnumber;
 		this.subject = subject;
 	}
+
+	public StudentMarks(float obtainedmarks ,int rollnumber, String subject) {
+		super();
+		this.rollnumber = rollnumber;
+		this.subject = subject;
+		this.obtainedmarks = obtainedmarks;
+	}
+
+
+	private int hindi;
+	public StudentMarks(String subject, int maxmarks, float obtainedmarks) {
+		super();
+		this.subject = subject;
+		this.maxmarks = maxmarks;
+		this.obtainedmarks = obtainedmarks;
+	}
+	
+	public StudentMarks(int rollnumber, String subject, String name,float obtainedmarks,int maxmarks) {
+		super();
+		this.rollnumber = rollnumber;
+		this.subject = subject;
+		this.name = name;
+		this.obtainedmarks= obtainedmarks;
+		this.maxmarks = maxmarks;
+	}
+
+
+	public StudentMarks() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	public int getRollnumber() {
 		return rollnumber;
 	}

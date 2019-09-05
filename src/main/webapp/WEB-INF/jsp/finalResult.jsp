@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+h1 {
+	color: black;
+}
+
+th {
+	background-color: #778899;
+}
+</style>
 </head>
 <body>
 
-	<h1>Your Result</h1>
-
-
+	<h1 style="text-decoration: underline;">Your Result</h1>
 	<h1>
 		<i>Student RollNumber</i>
 	</h1>
@@ -18,11 +26,11 @@
 		<tr>
 			<th style="padding: 10px">Rollnumber</th>
 		</tr>
+
 		<tr>
-			<td>${sd.rollnumber}</td>
+			<td>${aa.rollnumber}</td>
 		</tr>
 	</table>
-
 	<div>
 		<h1>
 			<i>Students Details</i>
@@ -33,55 +41,62 @@
 				<th>fatherName</th>
 				<th>Address</th>
 			</tr>
-
-
 			<tr>
-				<td>${ss.name}</td>
-				<td>${ss.fatherName}</td>
-				<td>${ss.address}</td>
+				<td>${aa.name}</td>
+				<td>${aa.fatherName}</td>
+				<td>${aa.address}</td>
 			</tr>
 		</table>
 	</div>
-
-
 	<div>
 		<h1>
 			<i>Students Subject</i>
 		</h1>
 		<table border=1>
 			<tr>
-
 				<th style="padding: 10px">Subject</th>
 				<th>MaxsMarks</th>
 				<th>ObtainedMarks</th>
-
+				<th>Delet data</th>
+				<th>Edit data</th>
 			</tr>
-			<tr>
-				<td>${ss.subject}</td>
-				<td>${ss.maxmarks}</td>
-				<td>${ss.obtainedmarks}</td>
-			</tr>
+			<c:forEach items="${list}" var="ss">
+				<tr>
+					<td>${ss.subject}</td>
+					<td>${ss.maxmarks}</td>
+					<td>${ss.obtainedmarks}</td>
+					<td>
+						<form action="http://localhost:6696/logs/deletepage" method="post">
+						<input type="hidden" name="rollnumber" value="${slist.rollnumber }" />
+							<input type="button" value="Delete" class="delete"
+								onclick="delete_row('1')">
+						</form>
+					</td>
+					<td>
+						<form action="http://localhost:6696/logs/edit"
+							method="post">
+							<input type="hidden" name="rollnumber" value="${ss.rollnumber }" />
+							<input type="hidden" name="subject" value="${ss.subject }" />
+							<button type="submit" id="edit_button1" value="Edit" class="edit"
+								onclick="edit_row('1')"></button>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
-
 	<div>
 		<h1>
 			<i>Student Result</i>
 		</h1>
 		<table border=1>
 			<tr>
-				
 				<th>Percentage</th>
 			</tr>
-
-
 			<tr>
-			
-				<th>${ss.percentage}</th>
+				<th>${aa.percentage}</th>
 		</table>
-
-
 	</div>
-	</form>
+
 </body>
 </html>
