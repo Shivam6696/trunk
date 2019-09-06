@@ -5,11 +5,24 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+body {
+  background-color:	#FFE4E1;
+}
+a
+{
+color : #4169E1;
+}
+.btnsubmit1:hover {
+	color:#FFFFF;
+	background-color:#00CED1;
+}
+</style>
 </head>
 <body>
 <form action="http://localhost:6696/logs/details" method="post">
     Roll Number: <input type="number" name="rollnumber">
-    <input type="submit">
+       <button class="btnsubmit1" type="submit">Submit</button>
     </form>
     <tr>
     <th>

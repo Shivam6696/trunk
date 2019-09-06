@@ -21,6 +21,12 @@ h1 {
 th {
 	background-color: #778899;
 }
+
+body 
+{
+background-color: #FFFFFF1;
+}
+
 </style>
 </head>
 <body>

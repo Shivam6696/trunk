@@ -46,6 +46,18 @@ public class StudentMarks {
 		this.maxmarks = maxmarks;
 	}
 
+ 
+	
+	
+	
+	public StudentMarks(int rollnumber, String subject, int maxmarks, float obtainedmarks, String name) {
+		super();
+		this.rollnumber = rollnumber;
+		this.subject = subject;
+		this.maxmarks = maxmarks;
+		this.obtainedmarks = obtainedmarks;
+		this.name = name;
+	}
 
 	public StudentMarks() {
 		// TODO Auto-generated constructor stub

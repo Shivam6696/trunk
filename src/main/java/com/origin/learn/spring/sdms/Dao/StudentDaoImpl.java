@@ -26,24 +26,9 @@ public class StudentDaoImpl {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	/*
-	 * public List<StudentAllDetails> getDetailsList(int rollnumber) { return
-	 * jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new
-	 * Object[] { rollnumber }, new RowMapper<StudentAllDetails>() {
-	 * 
-	 * public StudentAllDetails mapRow(ResultSet rs, int rowNum) throws SQLException
-	 * { StudentAllDetails student = new StudentAllDetails();
-	 * student.setRollNumber(rs.getInt(1)); student.setName(rs.getString(2));
-	 * student.setSubject(rs.getString(3)); student.setObtainedMarks(rs.getInt(4));
-	 * student.setMaxMarks(rs.getInt(5)); student.setPercentage(rs.getInt(6));
-	 * 
-	 * return student; }
-	 * 
-	 * }); }
-	 * 
-	 */
+	
 
-	/*---------------------------student data info in diff - diff- table method--------------------------------*/
+	/*---------------------------student data info in diff - diff- table method-------------------*/
 	public List<StudentData> getStudentDataInfo(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM newstudent WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentData>() {
@@ -133,7 +118,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*---------------------------edit new details in studentdetails table method --------------------------------*/
+	/*---------------------------insert new details in studentdetails table method --------------------------------*/
 	public Boolean addStudentData(StudentMarks stu) {
 		return jdbcTemplate.execute("INSERT INTO newstudent(Subject,MaxMarks,ObtainedMarks) VALUES(?,?,?)",
 				new PreparedStatementCallback<Boolean>() {
@@ -151,7 +136,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*-------------------------------------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------*/
 	public List<StudentData> getStudentResult(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentData>() {
@@ -170,69 +155,61 @@ public class StudentDaoImpl {
 
 				});
 	}
-	/*-------------------------------------------------------------------------------------*/
 
-	public List<StudentData> getStudentDataDelete(int rollnumber) {
-		return jdbcTemplate.query("DELETE FROM newstudent WHERE rollnumber = ?", new Object[] { rollnumber },
-				new RowMapper<StudentData>() {
+	
+/*------------------------------Record delete method-------------------------------------------------------------*/
+	public int recordDelete(int rollnumber, String subject) {
+		String query = "DELETE FROM newstudent WHERE rollnumber = ? AND subject = ?";
+		return jdbcTemplate.execute(query, new PreparedStatementCallback<Integer>() {
+
+			@Override
+			public Integer doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setInt(1, rollnumber);
+				ps.setString(2, subject);
+				return ps.executeUpdate();
+			}
+
+		});
+	}
+	
+	/*--------------------------------------data update method--------------------------------------------------------------*/
+
+	public int getStudedntDataUpdate(String subjectName,float obtainedmarks,int maxmarks,int rollnumber,String subject) {
+		return jdbcTemplate.execute("UPDATE newstudent SET subject=?,maxmarks=?, obtainmarks=? WHERE rollnumber=? AND subject = ?",
+				new PreparedStatementCallback<Integer>() {
 
 					@Override
-					public StudentData mapRow(ResultSet rs, int rowNum) throws SQLException {
-						StudentData result = new StudentData();
-						result.setRollnumber(rs.getInt(2));
-						result.setName(rs.getString(3));
-						result.setFatherName(rs.getString(4));
-						result.setAddress(rs.getString(5));
-						result.setSubject(rs.getString(6));
-						result.setObtainedmarks(rs.getInt(7));
-						result.setMaxmarks(rs.getInt(8));
-						/*
-						 * int obtainMarks = rs.getInt(5) + rs.getInt(6) + rs.getInt(7);
-						 * result.setObtainedmarks(obtainMarks); float percentage =
-						 * (((result.getObtainedmarks()) * 100) / (result.getMaxmarks()));
-						 */ result.setPercentage(rs.getInt(9));
-						return result;
+					public Integer doInPreparedStatement(PreparedStatement ps)
+							throws SQLException, DataAccessException {
+						ps.setString(1,subjectName);
+						ps.setInt(2,maxmarks);
+						ps.setFloat(3,obtainedmarks);
+						ps.setInt(4,rollnumber);
+						ps.setString(5 ,subject);
+						return ps.executeUpdate();
 					}
+
 				});
 	}
-/*--------------------------------------data update method--------------------------------------------------------------
-	public List<StudentData> getStudedntDataEdit(float obtainedmarks,int rollnumber,String subject)
-	{
-		
-				return jdbcTemplate.execute(" UPDATE newstudent  SET obtainedmarks=? WHERE rollnumber = ? AND subject=?", new Object[] { obtainedmarks,rollnumber,subject},
-						new PreparedStatementCallback<T>() {
-
-							@Override
-							public Integer doInPreparedStatement(PreparedStatement ps)
-									throws SQLException, DataAccessException {
-								ps.setString(3, stu.getSubject());
-								ps.setInt(5, stu.getMaxmarks());
-								ps.setFloat(4, stu.getObtainedmarks());
-
-								return ps.execute();
-							}
-						}; {
-
-							
-							
-							}
-						
-	} 
-	-----------------------------------------------------------------------------------------*/
 	
-	public StudentMarks getStudentMarksBySubjectAndRollNo(int rollnumber, String subjectName) {
-		return jdbcTemplate.queryForObject("SELECT * FROM newstudent WHERE rollnumber = ? AND subject=?", new
-				  Object[] { rollnumber, subjectName}, (rs, rowNum) -> 
-		
-				new StudentMarks( 
-						rs.getString("subject"),
-						rs.getInt("maxmarks"),
-						rs.getFloat("obtainedmarks")
-				));
+	
+	/*-----------------fetch a data form newstudent table and change the data -----------------*/
+
+	public StudentData getStudentMarksBySubjectAndRollNo(int rollnumber,String subject) {
+		return jdbcTemplate.queryForObject("SELECT * FROM newstudent WHERE rollnumber = ? AND subject=?",
+				new Object[] { rollnumber, subject }, (rs, rowNum) ->
+				new StudentData(
+					rs.getInt("rollnumber"),
+					rs.getString("name"),
+					rs.getString("fathername"),
+					rs.getString("address"),
+					rs.getString("subject"),
+					rs.getInt("maxmarks"), 
+					rs.getFloat("obtainmarks")));
 	}
 	
+
 	
 	
-	
-	
+
 }

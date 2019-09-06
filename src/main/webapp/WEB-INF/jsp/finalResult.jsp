@@ -14,6 +14,19 @@ h1 {
 th {
 	background-color: #778899;
 }
+
+body {
+	background-color: #E0FFFF;
+}
+
+.edit:hover {
+	color: #FFFFFF;
+	background-color: #778899;
+}
+.delete:hover {
+	color: #FFFFFF;
+	background-color: #778899;
+}
 </style>
 </head>
 <body>
@@ -66,19 +79,19 @@ th {
 					<td>${ss.maxmarks}</td>
 					<td>${ss.obtainedmarks}</td>
 					<td>
-						<form action="http://localhost:6696/logs/deletepage" method="post">
-						<input type="hidden" name="rollnumber" value="${slist.rollnumber }" />
-							<input type="button" value="Delete" class="delete"
-								onclick="delete_row('1')">
+						<form action="http://localhost:6696/logs/recordDelete"
+							method="post">
+							<input type="hidden" name="subjectName" value="${ss.subject}">
+							  <input type="hidden" name="rollnumber" value="${ss.rollnumber}">
+							<button type="submit" id="edit_button1" class="delete">Delete</button>
+
 						</form>
 					</td>
 					<td>
-						<form action="http://localhost:6696/logs/edit"
-							method="post">
+						<form action="http://localhost:6696/logs/edit" method="post">
 							<input type="hidden" name="rollnumber" value="${ss.rollnumber }" />
-							<input type="hidden" name="subject" value="${ss.subject }" />
-							<button type="submit" id="edit_button1" value="Edit" class="edit"
-								onclick="edit_row('1')"></button>
+							<input type="hidden" name="subjectName" value="${ss.subject }" />
+							<button type="submit" id="edit_button1" class="edit">Edit</button>
 						</form>
 					</td>
 				</tr>

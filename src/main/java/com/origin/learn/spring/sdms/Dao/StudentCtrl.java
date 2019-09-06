@@ -92,62 +92,89 @@ public class StudentCtrl {
 		return modelAndView;
 
 	}
-/*-------------------------------data delete mapping ----------------------------------------------------*/
-	@RequestMapping(value = "deletepage", method = RequestMethod.POST)
-	public ModelAndView studentdataDelete(@RequestParam int rollnumber) throws Exception {
-		List<StudentData> studentList = studentdetails.getStudentDataDelete(rollnumber);
-		StudentData studentdata = studentList.get(0);
-		System.out.println(studentdata.getName());
-		System.out.println(studentdata.getFatherName());
-		System.out.println(studentdata.getAddress());
-		System.out.println(studentdata.getSubject());
-		System.out.println(studentdata.getMaxmarks());
-		System.out.println(studentdata.getPercentage());
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("");
-		modelAndView.addObject("slist", studentList);
-		return modelAndView;
 
+	/*-------------------------------data delete mapping ----------------------------------------------------
+		@RequestMapping(value = "deletepage", method = RequestMethod.POST)
+		public ModelAndView studentdataDelete(@RequestParam int rollnumber) throws Exception {
+			List<StudentData> studentList = studentdetails.getStudentDataDelete(rollnumber);
+			StudentData studentdata = studentList.get(0);
+			System.out.println(studentdata.getName());
+			System.out.println(studentdata.getFatherName());
+			System.out.println(studentdata.getAddress());
+			System.out.println(studentdata.getSubject());
+			System.out.println(studentdata.getMaxmarks());
+			System.out.println(studentdata.getPercentage());
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("");
+			modelAndView.addObject("slist", studentList);
+			return modelAndView;
+	
+		}*/
+	/*--------------select data tp addite by rollnumber and subject method mepping---------------------*/
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String saveEditedMarks(@RequestParam int rollnumber, @RequestParam String subjectName,
+			@RequestParam float obtainedmarks, @RequestParam String subject, @RequestParam int maxmarks) {
+		/*
+		 * StudentData data =
+		 * studentdetails.getStudentMarksBySubjectAndRollNo(rollnumber, subjectName);
+		 * data.setSubject(subjectName); data.setMaxmarks(maxmarks);
+		 * data.setObtainedmarks(obtaindmarks);
+		 */
+		int i = studentdetails.getStudedntDataUpdate(subjectName, obtainedmarks, maxmarks, rollnumber, subject);
+		System.out.println(i);
+		return "finalResult";
 	}
-	
-	/*------------------------------------------------------------------------------------
-	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public ModelAndView getStudedntDataEdit(@RequestParam int rollnumber) throws Exception {
-		List<StudentData> studentList = studentdetails.getStudentDataDelete(rollnumber);
-		StudentData studentdata = studentList.get(0);
-		System.out.println(studentdata.getName());
-		System.out.println(studentdata.getFatherName());
-		System.out.println(studentdata.getAddress());
-		System.out.println(studentdata.getSubject());
-		System.out.println(studentdata.getMaxmarks());
-		System.out.println(studentdata.getPercentage());
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("delete");
-		modelAndView.addObject("slist", studentList);
-		return modelAndView;
 
-	}*/
-	
-	/*--------------------add new subject addSubject page mapping------------------------------ */
+	/*--------------------add new subject fetch data psge page mapping------------------------------*/
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public String editForm(@RequestParam int rollnumber,@RequestParam String subjectName) {
-		StudentMarks marks = studentdetails.getStudentMarksBySubjectAndRollNo(rollnumber,subjectName);
+	public ModelAndView editForm(@RequestParam int rollnumber, @RequestParam String subjectName) {
+		StudentData marks = studentdetails.getStudentMarksBySubjectAndRollNo(rollnumber, subjectName);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("editSubject");
+		modelAndView.addObject("marks", marks);
+		return modelAndView;
+	}
+
+	/*---------------------------recordDelete method mepping-------------------------------------*/
+	@RequestMapping(value = "recordDelete", method = RequestMethod.POST)
+	public String studentDataDelete(@RequestParam String subjectName,	@RequestParam int rollnumber) {
 		
-		return "editSubject";
+		int dataDelete =studentdetails.recordDelete(rollnumber,subjectName);
+				return "delete";
+	}
+/*------------------------------back to the home page mapping-----------------------------------------------*/
+	@RequestMapping(value = "homepage", method = RequestMethod.POST)
+	public String homePage() {
+		return "login";
 
 	}
+
+	/*--------------------add new subject addSubject page mapping------------------------------ 
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	public String subjectEdit() {
+		return "editSubject";
+	
+	}
+	
+	/*--------------------add new subject in table mapping------------------------------
+	@RequestMapping(value = "enter", method = RequestMethod.POST)
+	public Boolean getStudedntDataEdit(@RequestParam float obtaindmarks,@RequestParam int maxmarks,@RequestParam String subjectName) {
+	
+		StudentMarks sm = new StudentMarks(obtaindmarks,maxmarks ,subjectName);
+		Boolean updatedat = studentdetails.getStudedntDataEdit(sm);
+		return updatedat;
+	
+	}*/
+
 	/*--------------------add new subject in table mapping------------------------------ 
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public Boolean addNewDetails(@RequestParam String subjectName,@RequestParam  int maxmarks,@RequestParam  float obtaindmarks) {
-
+	
 		StudentMarks sd = new StudentMarks( subjectName, maxmarks, obtaindmarks);
 		Boolean sdata = studentdetails.addStudentData(sd);
 		return sdata;
-
+	
 	}*/
-	
-
-	
 
 	/*
 	 * @RequestMapping(value = "studentdata", method = RequestMethod.POST) public

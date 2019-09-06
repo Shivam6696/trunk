@@ -5,6 +5,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+body 
+{
+background-color:#ffb3d1;
+}
+
+</style>
 </head>
 <body>
 	Your data is successfully stored in database.
