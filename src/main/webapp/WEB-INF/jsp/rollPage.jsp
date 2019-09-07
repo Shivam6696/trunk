@@ -23,6 +23,11 @@ h1 {
 	color: #FFFFFFF;
 	background-color: skyblue;
 }
+.btnsubmit3:hover 
+{
+color: #FFFFFFF;
+	background-color: skyblue;
+}
 </style>
 </head>
 <body>
@@ -38,7 +43,16 @@ h1 {
 	<form action="http://localhost:6696/logs/homepage" method="post">
 		<h1 style="text-decoration: underline;">back to the home page to
 			add new more details</h1>
-		<button class="btnsubmit1" type="submit">Home</button>
+		<button class="btnsubmit3" type="submit">Home</button>
 	</form>
+	
+	</form>
+	<form action="http://localhost:6696/logs/loadExcel" method="post"
+		enctype="multipart/form-data" style="padding: 50px">
+		File : <input type="file" name="mf" required="required"> 
+		<input type="submit" value="Upload File">
+			
+	</form>
+	
 </body>
 </html>

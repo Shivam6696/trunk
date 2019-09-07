@@ -1,12 +1,23 @@
 package com.origin.learn.spring.sdms.Dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
@@ -208,7 +219,69 @@ public class StudentDaoImpl {
 					rs.getFloat("obtainmarks")));
 	}
 	
+	/*---------------------------Read file method------------------------------------------------*/
+	public List<StudentData> readFile(File file) {
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		List<StudentData> list = new ArrayList<>();
 
+		try {
+			Workbook workbook = new XSSFWorkbook(fis);
+
+			Sheet sheet = workbook.getSheet("Sheet1");
+			int i = sheet.getLastRowNum();
+
+			for (int j = 1; j <= i; j++) {
+
+				Row row = sheet.getRow(j);
+				int rollnumber = (int) (row.getCell(0).getNumericCellValue());
+				String name = row.getCell(1).getStringCellValue();
+				float obtainedMarks = (float) (row.getCell(2).getNumericCellValue());
+				int maxmarks = (int) row.getCell(3).getNumericCellValue();
+				String subject = row.getCell(4).getStringCellValue();
+
+				StudentData data= new StudentData();
+				data.setRollnumber(rollnumber);
+				data.setName(name);
+				data.setSubject(subject);
+				data.setObtainedmarks(obtainedMarks);
+				data.setMaxmarks(maxmarks);
+				System.out.println(data);
+				list.add(data);
+			}
+			workbook.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+
+	/*-------------------------------data save excel into database-----------------------------------------------*/
+	public int[] saveExcelToDatabase(List<StudentData> list) {
+		return jdbcTemplate.batchUpdate("INSERT INTO studentdata VALUES(?,?,?,?,?)", new BatchPreparedStatementSetter() {
+
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, list.get(i).getRollnumber());
+				ps.setString(2, list.get(i).getName());
+				ps.setFloat(3, list.get(i).getObtainedmarks());
+				ps.setInt(4, list.get(i).getMaxmarks());
+				ps.setString(5, list.get(i).getSubject());
+			}
+
+			@Override
+			public int getBatchSize() {
+
+				return list.size();
+			}
+		});
+	}
 	
 	
 
