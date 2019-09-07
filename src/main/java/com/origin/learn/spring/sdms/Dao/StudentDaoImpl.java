@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -39,7 +38,7 @@ public class StudentDaoImpl {
 
 	
 
-	/*---------------------------student data info in diff - diff- table method-------------------*/
+	/**---------------------------student data info in diff - diff- table method-------------------*/
 	public List<StudentData> getStudentDataInfo(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM newstudent WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentData>() {
@@ -64,7 +63,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*---------------------------student details method--------------------------------*/
+	/**---------------------------student details method--------------------------------*/
 	public List<Student> getStudentList(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<Student>() {
@@ -82,7 +81,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*---------------------------student marks details method--------------------------------*/
+	/**--------------------------student marks details method--------------------------------*/
 	public List<StudentMarks> getStudentMarks(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM studentmarks WHERE RollNumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentMarks>() {
@@ -108,7 +107,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*---------------------------student insert  new subject in table method --------------------------------*/
+	/**--------------------------student insert  new subject in table method --------------------------------*/
 	public Boolean addSubject1(StudentMarks sub) {
 		return jdbcTemplate.execute(
 				"INSERT INTO allstudentdetails(RollNumber,Name,Subject,ObtainedMarks,MaxMarks) VALUES(?,?,?,?,?)",
@@ -129,7 +128,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*---------------------------insert new details in studentdetails table method --------------------------------*/
+	/**--------------------------insert new details in studentdetails table method --------------------------------*/
 	public Boolean addStudentData(StudentMarks stu) {
 		return jdbcTemplate.execute("INSERT INTO newstudent(Subject,MaxMarks,ObtainedMarks) VALUES(?,?,?)",
 				new PreparedStatementCallback<Boolean>() {
@@ -147,7 +146,7 @@ public class StudentDaoImpl {
 				});
 	}
 
-	/*----------------------------------------------------------------------------*/
+	/**----------------------------select a data to change the records----------------------------*/
 	public List<StudentData> getStudentResult(int rollnumber) {
 		return jdbcTemplate.query("SELECT * FROM studentdetails WHERE rollnumber = ?", new Object[] { rollnumber },
 				new RowMapper<StudentData>() {
@@ -168,7 +167,7 @@ public class StudentDaoImpl {
 	}
 
 	
-/*------------------------------Record delete method-------------------------------------------------------------*/
+/**-----------------------------Record delete method-----------------------------------------*/
 	public int recordDelete(int rollnumber, String subject) {
 		String query = "DELETE FROM newstudent WHERE rollnumber = ? AND subject = ?";
 		return jdbcTemplate.execute(query, new PreparedStatementCallback<Integer>() {
@@ -183,7 +182,7 @@ public class StudentDaoImpl {
 		});
 	}
 	
-	/*--------------------------------------data update method--------------------------------------------------------------*/
+	/**--------------------------------------data update method--------------------------------------------------------------*/
 
 	public int getStudedntDataUpdate(String subjectName,float obtainedmarks,int maxmarks,int rollnumber,String subject) {
 		return jdbcTemplate.execute("UPDATE newstudent SET subject=?,maxmarks=?, obtainmarks=? WHERE rollnumber=? AND subject = ?",
@@ -204,7 +203,7 @@ public class StudentDaoImpl {
 	}
 	
 	
-	/*-----------------fetch a data form newstudent table and change the data -----------------*/
+	/**-----------------fetch a data form newstudent table and change the data -----------------*/
 
 	public StudentData getStudentMarksBySubjectAndRollNo(int rollnumber,String subject) {
 		return jdbcTemplate.queryForObject("SELECT * FROM newstudent WHERE rollnumber = ? AND subject=?",
@@ -219,7 +218,7 @@ public class StudentDaoImpl {
 					rs.getFloat("obtainmarks")));
 	}
 	
-	/*---------------------------Read file method------------------------------------------------*/
+	/**---------------------------Read file method------------------------------------------------*/
 	public List<StudentData> readFile(File file) {
 		FileInputStream fis = null;
 		try {
@@ -262,7 +261,7 @@ public class StudentDaoImpl {
 	}
 
 
-	/*-------------------------------data save excel into database-----------------------------------------------*/
+	/**------------------------------data save excel into database--------------------------------*/
 	public int[] saveExcelToDatabase(List<StudentData> list) {
 		return jdbcTemplate.batchUpdate("INSERT INTO studentdata VALUES(?,?,?,?,?)", new BatchPreparedStatementSetter() {
 
@@ -283,6 +282,30 @@ public class StudentDaoImpl {
 		});
 	}
 	
-	
-
+	/*-----------------------------------------------------------------------------------------
+	public void getFileStream() throws IOException
+	{
+		  try {
+			Connection con = jdbcTemplate.getDataSource().getConnection();
+			PreparedStatement preparedStatement = con.prepareStatement("Select udk, gfimage from instrumentimages");
+			ResultSet rs = preparedStatement.executeQuery();
+			while(rs.next())
+			{
+				 String udk = rs.getString("udk");
+				 byte[]  is =  rs.getBytes("gfimage");
+				 File f = new File("D:\\excel\\New",udk+".jpg");
+				 FileOutputStream fos = new FileOutputStream(f);
+				 //byte[] buffer = new byte[is.available()];
+				 System.out.println(is.length);
+				
+				 fos.write(is);
+				 fos.flush();
+				 fos.close();
+			}
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+	}
+	*/
 }

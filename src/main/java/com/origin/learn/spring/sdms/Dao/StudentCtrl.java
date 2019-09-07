@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,13 +20,13 @@ public class StudentCtrl {
 	@Autowired
 	StudentDaoImpl studentdetails;
 
-	/*--------------------controller mapping for login page------------------------------ */
+	/**-------------------controller mapping for login page------------------------------ */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginpage() {
 		return "login";
 	}
 
-	/*--------------------one student details by rollnumber mapping------------------------------ */
+	/**--------------------one student details by rollnumber mapping------------------------------ */
 	
 	@RequestMapping(value = "details", method = RequestMethod.POST)
 	public ModelAndView studentDetailsPage(@RequestParam int rollnumber) {
@@ -48,14 +48,14 @@ public class StudentCtrl {
 
 	}
 
-	/*--------------------add new subject addSubject page mapping------------------------------ */
+	/**--------------------add new subject addSubject page mapping------------------------------ */
 	@RequestMapping(value = "addsubject", method = RequestMethod.GET)
 	public String subjectForm() {
 		return "addSubject";
 
 	}
 
-	/*--------------------add new subject in table mapping------------------------------ */
+	/**--------------------add new subject in table mapping------------------------------ */
 	@RequestMapping(value = "newsubject", method = RequestMethod.POST)
 	public Boolean addNewSubject(@RequestParam String subjectName, @RequestParam int studentrollnumber,
 			@RequestParam String studentname, float obtaindmarks, int maxmarks) {
@@ -65,13 +65,14 @@ public class StudentCtrl {
 		return lakede;
 
 	}
-
+	
+	/**-----------------------always return thank you page-mapping method-----------------------*/
 	@RequestMapping(value = "thankyou", method = RequestMethod.POST)
 	public String thankuPage() {
 		return "thanku";
 	}
 
-	/*--------------------add new subject page mapping------------------------------ */
+	/**--------------------add new subject page mapping------------------------------ */
 	@RequestMapping(value = "enter", method = RequestMethod.GET)
 	public String infoPage() {
 
@@ -79,7 +80,7 @@ public class StudentCtrl {
 
 	}
 
-	/*--------------------student data mapping------------------------------ */
+	/**-------------------student data mapping------------------------------ */
 	@RequestMapping(value = "studentdata", method = RequestMethod.POST)
 	public ModelAndView studentdatapage(@RequestParam int rollnumber) {
 		List<StudentData> list2 = studentdetails.getStudentDataInfo(rollnumber);
@@ -100,7 +101,7 @@ public class StudentCtrl {
 	}
 
 	
-	/*--------------select data tp addite by rollnumber and subject method mepping---------------------*/
+	/**--------------select data tp addite by rollnumber and subject method mepping---------------------*/
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String saveEditedMarks(@RequestParam int rollnumber, @RequestParam String subjectName,
 			@RequestParam float obtainedmarks, @RequestParam String subject, @RequestParam int maxmarks) {
@@ -110,7 +111,7 @@ public class StudentCtrl {
 		return "finalResult";
 	}
 
-	/*--------------------add new subject fetch data psge page mapping------------------------------*/
+	/**--------------------add new subject fetch data psge page mapping------------------------------*/
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
 	public ModelAndView editForm(@RequestParam int rollnumber, @RequestParam String subjectName) {
 		StudentData marks = studentdetails.getStudentMarksBySubjectAndRollNo(rollnumber, subjectName);
@@ -120,27 +121,34 @@ public class StudentCtrl {
 		return modelAndView;
 	}
 
-	/*---------------------------recordDelete method mepping-------------------------------------*/
+	/**--------------------------recordDelete method mepping-------------------------------------*/
 	@RequestMapping(value = "recordDelete", method = RequestMethod.POST)
 	public String studentDataDelete(@RequestParam String subjectName,	@RequestParam int rollnumber) {
 		
 		int dataDelete =studentdetails.recordDelete(rollnumber,subjectName);
 				return "delete";
 	}
-/*------------------------------back to the home page mapping-------------------------------------*/
+/**------------------------back to the home page mapping-------------------------------------*/
 	@RequestMapping(value = "homepage", method = RequestMethod.POST)
 	public String homePage() {
 		return "login";
 
 	}
-	/*------------------------------back to the home from thanku page---------------------------------*/
+	/**------------------------------back to the home from thanku page---------------------------------*/
 	@RequestMapping(value = "home", method = RequestMethod.POST)
 	public String home() {
 		return "login";
 
 	}
+	/**--------------------------click a insert excel button -----------------------------------------------------*/
+	
+	@RequestMapping(value = "uploadfile", method = RequestMethod.POST)
+	public String filePage() {
+		return "fileupload";
 
-	/*------------------------------insert a excel into database-----------------------------*/
+	}
+
+	/**------------------------------insert a excel into database-----------------------------*/
 	@RequestMapping(value = "loadExcel", method = RequestMethod.POST)
 	public String uploadExcel(@RequestParam MultipartFile mf) {
 		File file = new File("D:\\excel\\New", mf.getOriginalFilename());
@@ -155,5 +163,31 @@ public class StudentCtrl {
 		return "thanku";
 	}
 
+	/*-----------------------------printa data in  json form -method mapping--------------------------*/
+	@RequestMapping(value = "json", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Student getRoll(@RequestParam int rollnumber) {
+		System.out.println(rollnumber);
+		List<Student> list = studentdetails.getStudentList(rollnumber);
+		List<StudentMarks> list1 = studentdetails.getStudentMarks(rollnumber);
+		Student studentDetails = list.get(0);
+		System.out.println(studentDetails.getName());
+		return studentDetails;
+	}
 	
+/**------------------------------------------------------------------------------------------------
+ * 
+ *
+	@RequestMapping(value = "rollpage", method = RequestMethod.GET) 
+	public String rollnoPage()
+	{   try {   
+		details.getFileStream();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+			return "RollNoPage";
+	}
+	*/
 }
